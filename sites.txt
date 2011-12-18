@@ -1,0 +1,6 @@
+reddit.com
+news.ycombinator.com
+facebook.com
+twitter.com
+nzbs.org
+nzbmatrix.com
