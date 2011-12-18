@@ -21,7 +21,9 @@ readChoice=$readChoice
 enableFun ()
 {
   echo "Enabling FunKiller .."
-  # cat sites to hosts file
+  # delete funkiller anyway, just in case
+  sudo sed -i '' "/FUNKILLER/,/FUNKILLER/d" test.txt
+  sudo cat $sitesFile >> $hostsFile
   echo "FunKiller enabled. Do some work!"
 }
 
@@ -30,12 +32,15 @@ disableFun ()
 {
   echo "Disabling FunKiller .."
   # remove lines from hosts file
+  sudo sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
   sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
   #sudo cat $tmpFile >> $hostsFile
   rm -f $tmpFile
   echo "FunKiller disabled."
 }
 
+# START OF PROGRAM
+# Print choice.
 echo "FUNKILLER"
 echo -n "Enable or disable?: "
 read -n 1 readChoice
@@ -49,13 +54,12 @@ while [ "$readChoice" != y -a "$readChoice" != Y -a "$readChoice" != n -a "$read
     done
 
 case $readChoice in
-
 	        y|Y)    
 					enableFun
 	        		;;
 
 	        n|N)
-	                disableFun
-	                ;;
-	esac
+	        disableFun
+	            ;;
+	  esac
 
