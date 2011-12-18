@@ -1,19 +1,24 @@
 #!/bin/bash
 
+###
+#
 # FUNKILLER
 # Disables popular time wasting websites to encourage productivity.
-
+#
 # By Josh Lapham [josh@joshlapham.com]
-
+#
 # DISCLAIMER: I don't take responsibility for any of this.
-
+#
 # Misc notes:
+#
 # * Must be run as sudo.
 # * Appends to end of /etc/hosts file.
 # * Enabling and disabling clears FunKiller section of hosts file with sed. Disable comments out hosts added by FunKiller.
+#
+###
 
 # VARIABLES
-# Directory where script resides.
+# Directory where script is being run from.
 BASEDIR=$(dirname $0)
 # Path to hosts file.
 hostsFile=$hostsFile
@@ -28,7 +33,7 @@ export tmpFile="$BASEDIR/sites.tmp"
 readChoice=$readChoice
 
 # FUNCTIONS
-# Enable FunKiller.
+# Enable FunKiller
 enableFun ()
 {
   echo "Enabling FunKiller .."
@@ -39,7 +44,7 @@ enableFun ()
   echo "FunKiller enabled. Do some work!"
 }
 
-# Disable FunKiller.
+# Disable FunKiller
 disableFun ()
 {
   echo "Disabling FunKiller .."
@@ -55,13 +60,13 @@ disableFun ()
 }
 
 # START OF MAIN
-# Print choice.
-echo "FUNKILLER"
+# Print choice
+echo "FunKiller"
 echo -n "Enable or disable?: "
 read -n 1 readChoice
 echo ""
 
-# Accept E/D answers only.
+# Accept E/D answers only
 while [ "$readChoice" != e -a "$readChoice" != E -a "$readChoice" != d -a "$readChoice" != D ]; do
     echo -n "Choose E or D: "
     read -n 1 readChoice
@@ -70,11 +75,9 @@ while [ "$readChoice" != e -a "$readChoice" != E -a "$readChoice" != d -a "$read
 
 case $readChoice in
 	        e|E)    
-					enableFun
-	        		;;
+			enableFun
+	        	;;
 
 	        d|D)
 	        disableFun
-	            ;;
-	  esac
-
+	esac
