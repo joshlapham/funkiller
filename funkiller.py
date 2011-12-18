@@ -23,4 +23,6 @@ def disableFunkiller():
 # Start of program.
 # Open data file and print contents.
 openfile = open('data.txt', 'r')
+openfile.seek(-331,2)
 print openfile.read()
+
