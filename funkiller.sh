@@ -13,7 +13,8 @@
 #
 # * Must be run as sudo.
 # * Appends to end of /etc/hosts file.
-# * Enabling and disabling clears FunKiller section of hosts file with sed. Disable comments out hosts added by FunKiller.
+# * Enabling and disabling clears FunKiller section of hosts file with sed. Disabling comments out hosts added by FunKiller.
+# * Edit sites you want to disable in sites.txt
 #
 ###
 
