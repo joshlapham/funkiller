@@ -1,3 +1,2 @@
-Use sites.txt as source for sites
-Use sed to add 127 and www in front of lines when adding from sites.txt
+DONE - Use sites.txt as source for sites
 

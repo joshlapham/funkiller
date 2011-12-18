@@ -4,15 +4,17 @@
 # Disables popular time wasting websites to encourage productivity.
 
 # VARIABLES
+# Directory where script resides.
+BASEDIR=$(dirname $0)
 # Path to hosts file.
 hostsFile=$hostsFile
 export hostsFile="/etc/hosts"
 # Path to sites file.
 sitesFile=$sitesFile
-export sitesFile="data.txt"
+export sitesFile="$BASEDIR/sites.txt"
 # Path to tmp file.
 tmpFile=$tmpFile
-export tmpFile="data.tmp"
+export tmpFile="$BASEDIR/sites.tmp"
 # Menu choice.
 readChoice=$readChoice
 
@@ -21,9 +23,8 @@ readChoice=$readChoice
 enableFun ()
 {
   echo "Enabling FunKiller .."
-  # delete funkiller anyway, just in case
-  sudo sed -i '' "/FUNKILLER/,/FUNKILLER/d" test.txt
-  sudo cat $sitesFile >> $hostsFile
+  sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+  cat $sitesFile >> $hostsFile
   echo "FunKiller enabled. Do some work!"
 }
 
@@ -31,34 +32,33 @@ enableFun ()
 disableFun ()
 {
   echo "Disabling FunKiller .."
-  # remove lines from hosts file
-  sudo sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+  sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
   sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
-  #sudo cat $tmpFile >> $hostsFile
+  cat $tmpFile >> $hostsFile
   rm -f $tmpFile
   echo "FunKiller disabled."
 }
 
-# START OF PROGRAM
+# START OF MAIN
 # Print choice.
 echo "FUNKILLER"
 echo -n "Enable or disable?: "
 read -n 1 readChoice
 echo ""
 
-# Accept Y/N answers only.
-while [ "$readChoice" != y -a "$readChoice" != Y -a "$readChoice" != n -a "$readChoice" != N ]; do
-    /bin/echo -n "Choose Y or N: "
+# Accept E/D answers only.
+while [ "$readChoice" != e -a "$readChoice" != E -a "$readChoice" != d -a "$readChoice" != D ]; do
+    echo -n "Choose E or D: "
     read -n 1 readChoice
-    /bin/echo ""
+    echo ""
     done
 
 case $readChoice in
-	        y|Y)    
+	        e|E)    
 					enableFun
 	        		;;
 
-	        n|N)
+	        d|D)
 	        disableFun
 	            ;;
 	  esac
