@@ -32,32 +32,58 @@ tmpFile=$tmpFile
 export tmpFile="$BASEDIR/sites.tmp"
 # Menu choice.
 readChoice=$readChoice
+# Uname value.
+OS=`uname`
 
 # FUNCTIONS
 # Enable FunKiller
 enableFun ()
 {
-  echo "Enabling FunKiller .."
+  echo "Enabling Funkiller .."
   # Find FunKiller comment header & footer in hosts file and remove lines.
-  sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
-  # Append sites.txt file to end of hosts file.
-  cat $sitesFile >> $hostsFile
-  echo "FunKiller enabled. Do some work!"
+  # Check and run different commands if OS is Mac.
+  if [[ "$OS" == "Darwin" ]]; then
+    sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+    # Append sites.txt file to end of hosts file.
+    cat $sitesFile >> $hostsFile
+    # Flush the DNS cache.
+    dscacheutil -flushcache
+    echo "Funkiller enabled. Do some work!"
+  else
+    sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+    # Append sites.txt file to end of hosts file.
+    cat $sitesFile >> $hostsFile
+    echo "Funkiller enabled. Do some work!"
+  fi
 }
 
 # Disable FunKiller
 disableFun ()
 {
-  echo "Disabling FunKiller .."
+  echo "Disabling Funkiller .."
   # Find FunKiller comment header & footer in hosts file and remove lines.
-  sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
-  # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
-  sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
-  # Write commented out lines from temp file to hosts file.
-  cat $tmpFile >> $hostsFile
-  # Clean up and remove temp file.
-  rm -f $tmpFile
-  echo "FunKiller disabled."
+  # Check and run different commands if OS is Mac.
+  if [[ "$OS" == "Darwin" ]]; then
+    sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+    # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
+    sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
+    # Write commented out lines from temp file to hosts file.
+    cat $tmpFile >> $hostsFile
+    # Flush the DNS cache.
+    dscacheutil -flushcache
+    # Clean up and remove temp file.
+    rm -f $tmpFile
+    echo "Funkiller disabled."
+  else
+    sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
+    # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
+    sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
+    # Write commented out lines from temp file to hosts file.
+    cat $tmpFile >> $hostsFile
+    # Clean up and remove temp file.
+    rm -f $tmpFile
+    echo "Funkiller disabled."
+  fi
 }
 
 # START OF MAIN
