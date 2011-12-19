@@ -22,14 +22,11 @@
 # Directory where script is being run from.
 BASEDIR=$(dirname $0)
 # Path to hosts file.
-hostsFile=$hostsFile
-export hostsFile="/etc/hosts"
+hostsFile="/etc/hosts"
 # Path to sites file.
-sitesFile=$sitesFile
-export sitesFile="$BASEDIR/sites.txt"
+sitesFile="$BASEDIR/sites.txt"
 # Path to tmp file.
-tmpFile=$tmpFile
-export tmpFile="$BASEDIR/sites.tmp"
+tmpFile="$BASEDIR/sites.tmp"
 # Menu choice.
 readChoice=$readChoice
 # Uname value.
