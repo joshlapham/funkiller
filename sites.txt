@@ -18,4 +18,12 @@
 127.0.0.1   www.youtube.com
 127.0.0.1   imdb.com
 127.0.0.1   www.imdb.com
+127.0.0.1   cnn.com
+127.0.0.1   www.cnn.com
+127.0.0.1   ninemsn.com.au
+127.0.0.1   www.ninemsn.com.au
+127.0.0.1   huffingtonpost.com
+127.0.0.1   www.huffingtonpost.com
+127.0.0.1   tumblr.com
+127.0.0.1   www.tumblr.com
 # END OF FUNKILLER
