@@ -12,9 +12,10 @@
 # Misc notes:
 #
 # * Must be run as sudo.
-# * Appends to end of /etc/hosts file.
-# * Enabling and disabling clears FunKiller section of hosts file with sed. Disabling comments out hosts added by FunKiller.
+# * Appends to end of /etc/hosts file and redirects sites to 127.0.0.1 (or, nothing.)
+# * Enabling and disabling clears Funkiller section of hosts file with sed. Disabling comments out hosts added by Funkiller.
 # * Edit sites you want to disable in sites.txt
+# * This isn't perfect but who cares, it does the job.
 #
 ###
 
@@ -37,12 +38,10 @@ OS=`uname`
 enableFun ()
 {
   echo "Enabling Funkiller .."
-  # Find FunKiller comment header & footer in hosts file and remove lines.
+  # Find Funkiller comment header & footer in hosts file and remove lines.
   # Check and run different commands if OS is Mac.
   if [[ "$OS" == "Darwin" ]]; then
-    # TESTING
-    echo $OS
-    echo "Mac"
+    # Use slightly different sed command on Mac, with '' marks.
     sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Append sites.txt file to end of hosts file.
     cat $sitesFile >> $hostsFile
@@ -50,9 +49,6 @@ enableFun ()
     dscacheutil -flushcache
     echo "Funkiller enabled. Do some work!"
   else
-    # TESTING
-    echo $OS
-    echo "Linux"
     sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Append sites.txt file to end of hosts file.
     cat $sitesFile >> $hostsFile
@@ -64,12 +60,10 @@ enableFun ()
 disableFun ()
 {
   echo "Disabling Funkiller .."
-  # Find FunKiller comment header & footer in hosts file and remove lines.
+  # Find Funkiller comment header & footer in hosts file and remove lines.
   # Check and run different commands if OS is Mac.
   if [[ "$OS" == "Darwin" ]]; then
-    # TESTING
-    echo $OS
-    echo "Mac"
+    # Use slightly different sed command on Mac, with '' marks.
     sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
     sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
@@ -81,9 +75,6 @@ disableFun ()
     rm -f $tmpFile
     echo "Funkiller disabled."
   else
-    # TESTING
-    echo $OS
-    echo "Linux"
     sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
     sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
