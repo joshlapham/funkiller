@@ -22,33 +22,34 @@
 # VARIABLES
 # Directory where script is being run from.
 BASEDIR=$(dirname $0)
+# Find out which OS is running.
+OS=`uname`
 # Path to hosts file.
 hostsFile="/etc/hosts"
 # Path to sites file.
 sitesFile="$BASEDIR/sites.txt"
-# Path to tmp file.
+# Path to temp file.
 tmpFile="$BASEDIR/sites.tmp"
-# Menu choice.
+# Menu choice for enable/disable of Funkiller.
 readChoice=$readChoice
-# Uname value.
-OS=`uname`
 
 # FUNCTIONS
 # Enable Funkiller
 enableFun ()
 {
-  echo "Enabling Funkiller .."
-  # Find Funkiller comment header & footer in hosts file and remove lines.
   # Check and run different commands if OS is Mac.
   if [[ "$OS" == "Darwin" ]]; then
+    # Find Funkiller comment header & footer in hosts file and remove lines.
     # Use slightly different sed command on Mac, with '' marks.
     sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Append sites.txt file to end of hosts file.
     cat $sitesFile >> $hostsFile
     # Flush the DNS cache.
+    echo "Flushing DNS cache .."
     dscacheutil -flushcache
     echo "Funkiller enabled. Do some work!"
   else
+    # Find Funkiller comment header & footer in hosts file and remove lines.
     sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Append sites.txt file to end of hosts file.
     cat $sitesFile >> $hostsFile
@@ -59,10 +60,9 @@ enableFun ()
 # Disable Funkiller
 disableFun ()
 {
-  echo "Disabling Funkiller .."
-  # Find Funkiller comment header & footer in hosts file and remove lines.
   # Check and run different commands if OS is Mac.
   if [[ "$OS" == "Darwin" ]]; then
+    # Find Funkiller comment header & footer in hosts file and remove lines.
     # Use slightly different sed command on Mac, with '' marks.
     sed -i '' "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
@@ -70,11 +70,13 @@ disableFun ()
     # Write commented out lines from temp file to hosts file.
     cat $tmpFile >> $hostsFile
     # Flush the DNS cache.
+    echo "Flushing DNS cache .."
     dscacheutil -flushcache
     # Clean up and remove temp file.
     rm -f $tmpFile
     echo "Funkiller disabled."
   else
+    # Find Funkiller comment header & footer in hosts file and remove lines.
     sed -i "/FUNKILLER/,/FUNKILLER/d" $hostsFile
     # Comment out 127.0.0.1 lines in sites.txt file and write to a temp file.
     sed -e "s/127.0.0.1/#127.0.0.1/g" $sitesFile >> $tmpFile
@@ -86,7 +88,7 @@ disableFun ()
   fi
 }
 
-# START OF MAIN
+# MAIN
 # Print choice
 echo "Funkiller"
 echo -n "Enable or disable?: "
@@ -102,9 +104,9 @@ while [ "$readChoice" != e -a "$readChoice" != E -a "$readChoice" != d -a "$read
 
 case $readChoice in
 	        e|E)    
-			enableFun
-	        	;;
+          enableFun
+            ;;
 
 	        d|D)
-	        disableFun
-	esac
+          disableFun
+esac
