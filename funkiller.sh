@@ -6,6 +6,8 @@
 # Disables popular time wasting websites to encourage productivity.
 #
 # By Josh Lapham [josh@joshlapham.com]
+# 
+# License: Beerware
 #
 # DISCLAIMER: I don't take responsibility for any of this.
 #
