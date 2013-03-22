@@ -3,25 +3,19 @@
 ###
 #
 # FUNKILLER
-# Disables popular time wasting websites to encourage productivity.
+# Disables popular time wasting websites to encourage productivity
 #
 # By Josh Lapham [josh@joshlapham.com]
+#
+# https://github.com/joshlapham/funkiller
 # 
 # License: Beerware
 #
-# DISCLAIMER: I don't take responsibility for any of this.
-#
-# Misc notes:
-#
-# * Must be run as sudo.
-# * Appends to end of /etc/hosts file and redirects sites to 127.0.0.1 (or, nothing.)
-# * Enabling and disabling clears Funkiller section of hosts file with sed. Disabling comments out hosts added by Funkiller.
-# * Edit sites you want to disable in sites.txt
-# * This isn't perfect but who cares, it does the job.
+# DISCLAIMER: I don't take responsibility for any of this
 #
 ###
 
-# VARIABLES
+## VARIABLES
 # Directory where script is being run from.
 BASEDIR=$(dirname $0)
 # Find out which OS is running.
@@ -35,7 +29,7 @@ tmpFile="$BASEDIR/sites.tmp"
 # Menu choice for enable/disable of Funkiller.
 readChoice=$readChoice
 
-# FUNCTIONS
+## FUNCTIONS
 # Enable Funkiller
 enableFun ()
 {
@@ -90,7 +84,7 @@ disableFun ()
   fi
 }
 
-# MAIN
+## MAIN
 # Print choice
 echo "Funkiller"
 echo -n "Enable or disable?: "
